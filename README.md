@@ -1,5 +1,5 @@
 # Number_Analysis_Program
- Phan mem giai bai mon Giai Tich So
+
 # Author:
 *Name* : **Hoang Manh Khiem**
 
@@ -11,12 +11,23 @@
 
 **Facebook : [Hoàng Mạnh Khiêm](https://www.facebook.com/hoangmanhkhiem.IT)**
 
+# Technology used
+ + Python 3.10
+ + Pyqt5
+ + Many Library Python about Math and Display Grapics
+
 # Use
-Bước 1: Gitclone https://github.com/hoangmanhkhiem/Number_Analysis_Program.git
+Step 1: git clone https://github.com/hoangmanhkhiem/Number_Analysis_Program.git
 
-Bước 2: Trong folder đã có tải sẵn các thư viện cần thiết nên chỉ cần cài đặt Python 3.10 để chạy
+Step 2: run main.py 
 
-Bước 3: Chạy file main.exe trong folder dist và hưởng thụ
+# Export to exe
+
+Step 1: Install pyinstaller
+
+Step 2: pyinstaller main.pyw
+
+Step 3: run main.exe
 
 # Note
 The source code is for learning only and not for commercial use or any other kind of abuse
