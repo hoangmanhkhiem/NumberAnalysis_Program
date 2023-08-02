@@ -70,11 +70,12 @@ class Xulidata(object):
     def Xuli(a):
         a
         y = Symbol("y")
-        b = "y+" + a
+        b = f"y+{a}"
         f = sympify(b)
         def ft(f):
             pt = lambdify(y, f)
             return pt(0)
+
         return ft(f)    
 
 
@@ -123,15 +124,15 @@ class NGHIEMPT(object):
                 return None
             F = sympify(func)
             return F
-        
+
         def INPUT():
             global F
             F = Input()
-            
+
         def f(x1):
             pt = lambdify(x,F)
             return pt(x1)
-        
+
         def BisectionMethod_Count(a,b,e):
             global dem_0
             e = e + 1
@@ -143,8 +144,8 @@ class NGHIEMPT(object):
                     b = dem_0
                 e = e - 1
             return dem_0
-        
-        
+
+
         def BisectionMethod(a, b, e):
             count_chia = 0
             global dem_1
@@ -158,30 +159,30 @@ class NGHIEMPT(object):
                 else:
                     b = dem_1
             return dem_1
-            
+
         #Xử lí đầu vào
         INPUT()
         a = ui.canduoi.toPlainText()
         b = ui.cantren.toPlainText()
         ep = ui.valuebombobox.toPlainText()
-        
+
         #Xác thực đầu vào
-        if F == None or a == "" or b == "" or ep == "":
+        if F is None or a == "" or b == "" or ep == "":
             ui.output.setText("ERROR!")
             messagebox.showerror("Hoàng Mạnh Khiêm VipPro", "Nhập thiếu dữ liệu đầu vào")
         else:
             #Chuyển đổi dữ liệu
             a = Xulidata.Xuli(a)
             b = Xulidata.Xuli(b)
-            
+
             #Xử lí đầu ra
             if ui.comboBox.currentText() == "Nhập giá trị sai số":
                 ep = float(ep)
                 y_ = BisectionMethod(a,b,ep)
-                if y_ == None:
+                if y_ is None:
                     messagebox.showwarning("Hoàng Mạnh Khiêm VipPro", "Không thể tìm thấy nghiệm")
                 y_ = str(y_)
-                ui.output.setText(y_) 
+                ui.output.setText(y_)
             else:
                 ep = int(ep)
                 if ep >= 25:
@@ -189,7 +190,7 @@ class NGHIEMPT(object):
                     messagebox.showwarning("Hoàng Mạnh Khiêm VipPro", "Số lần lặp vượt quá cho phép của admin")
                 else:
                     y_ = BisectionMethod_Count(a,b,ep)
-                    if y_ == None:
+                    if y_ is None:
                         messagebox.showwarning("Hoàng Mạnh Khiêm VipPro", "Không thể tìm thấy nghiệm")
                     y_ = str(y_)
                     ui.output.setText(y_) 
@@ -216,11 +217,11 @@ class NGHIEMPT(object):
                 return None
             F = sympify(func)
             return F
-        
+
         def INPUT():
             global F
             F = Input()
-            
+
         def f(x1):
             x = symbols("x")
             pt = lambdify(x,F)
@@ -240,7 +241,7 @@ class NGHIEMPT(object):
                 if bodem == 25:
                     return None
             return y
-        
+
         def IterationMethod_count(x0,n):
             x_0 = x0
             n = n - 1
@@ -250,25 +251,25 @@ class NGHIEMPT(object):
                 y = f(x_0)
                 n = n - 1
             return y
-            
+
         #Xử lí đầu vào
         INPUT()
         a = ui.giatrilap.toPlainText()
         ep = ui.valuebombobox.toPlainText()
-        
-        #Xác thực đầu vàonb 
-        if a == "" or ep == "" or F == None:
+
+        #Xác thực đầu vàonb
+        if a == "" or ep == "" or F is None:
             ui.output.setText("ERROR!")
             messagebox.showerror("Hoàng Mạnh Khiêm VipPro", "Nhập thiếu dữ liệu đầu vào")
         else:
             #Chuyển đổi dữ liệu
             a = Xulidata.Xuli(a)
-            
+
             #Xử lí đầu ra
             if ui.comboBox.currentText() == "Nhập giá trị sai số":
                 ep = float(ep)
                 y_ = IterationMethod(a,ep)
-                if y_ == None:
+                if y_ is None:
                     messagebox.showwarning("Hoàng Mạnh Khiêm VipPro", "Không thể tìm thấy nghiệm")
                 y_ = str(y_)
                 ui.output.setText(y_)
@@ -279,7 +280,7 @@ class NGHIEMPT(object):
                     messagebox.showwarning("Hoàng Mạnh Khiêm VipPro", "Số lần lặp vượt quá cho phép của admin")
                 else:    
                     y_ = IterationMethod_count(a,ep)
-                    if y_ == None:
+                    if y_ is None:
                         messagebox.showwarning("Hoàng Mạnh Khiêm VipPro", "Không thể tìm thấy nghiệm")
                     y_ = str(y_)
                     ui.output.setText(y_)
@@ -310,18 +311,15 @@ class NGHIEMPT(object):
         def INPUT():
             global F
             F = Input()
-            
+
         def f(x1):
             pt = lambdify(x,F)
             return pt(x1)
-        
+
         def Tangent_Method(a, b, e):
             bodem = 0
             global x_0
-            if f(a) > 0:
-                f_u = a
-            else:
-                f_u = b
+            f_u = a if f(a) > 0 else b
             x_0 = f_u - f(f_u) * e / (f(f_u+e) - f(f_u))
             while abs(x_0-f_u) > e:
                 if bodem == 25:
@@ -330,15 +328,15 @@ class NGHIEMPT(object):
                 f_u = x_0
                 x_0 = f_u - f(f_u) * e / (f(f_u + e) - f(f_u))
             return x_0
-                
+
         #Xử lí đầu vào
         INPUT()
         a = ui.canduoi.toPlainText()
         b = ui.cantren.toPlainText()
         ep = ui.valuebombobox_2.toPlainText()
-        
+
         #Xác thực đầu vào
-        if F == None or a == "" or b == "" or ep == "":
+        if F is None or a == "" or b == "" or ep == "":
             ui.output.setText("ERROR!")
             messagebox.showerror("Hoàng Mạnh Khiêm VipPro", "Nhập thiếu dữ liệu đầu vào")
         else:
@@ -346,10 +344,10 @@ class NGHIEMPT(object):
             a = Xulidata.Xuli(a)
             b = Xulidata.Xuli(b)
             ep = float(ep)
-                
+
             #Xử lí đầu ra
             y_ = Tangent_Method(a, b, ep)
-            if y_ == None:
+            if y_ is None:
                 messagebox.showwarning("Hoàng Mạnh Khiêm VipPro","Không thể tìm thấy nghiệm")
             y_ = str(y_)
             ui.output.setText(y_)   
@@ -374,11 +372,11 @@ class NGHIEMPT(object):
                 return None
             F = sympify(func)
             return F
-        
+
         def INPUT():
             global F
             F = Input()
-            
+
         def f(x1):
             pt = lambdify(x,F)
             return pt(x1)
@@ -404,15 +402,15 @@ class NGHIEMPT(object):
                     f_b = f(b)
                     dx = f_a*(b-a)/(f_a-f_b)
             return x_0
-            
+
         #Xử lí đầu vào
         INPUT()
         a = ui.canduoi.toPlainText()
         b = ui.cantren.toPlainText()
         ep = ui.valuebombobox.toPlainText()
-        
+
         #Xác thực đầu vào
-        if F == None or a == "" or b == "" or ep == "":
+        if F is None or a == "" or b == "" or ep == "":
             ui.output.setText("ERROR!")
             messagebox.showerror("Hoàng Mạnh Khiêm VipPro", "Nhập thiếu dữ liệu đầu vào")
         else:
@@ -420,10 +418,10 @@ class NGHIEMPT(object):
             a = Xulidata.Xuli(a)
             b = Xulidata.Xuli(b)
             ep = float(ep)
-            
+
             #Xử lí đầu ra
             y_ = Bowstring_Method(a, b, ep)
-            if y_ == None:
+            if y_ is None:
                 messagebox.showwarning("Hoàng Mạnh Khiêm VipPro", "Không thể tìm thấy nghiệm")
             y_ = str(y_)
             ui.output.setText(y_)    
@@ -739,15 +737,15 @@ class TICHPHAN(object):
                 return None
             F = sympify(func)
             return F
-        
+
         def INPUT():
             global F
             F = Input()
-            
+
         def f(x1):
                 pt = lambdify(x,F)
                 return pt(x1)
-            
+
         X1 = []
         Y1 = []
         def TTPHinhThang(a,b,n):
@@ -757,32 +755,30 @@ class TICHPHAN(object):
                 X1.append(a + i * h)
                 Y1.append(f(a + i * h))
             for i in range(n+1):
-                if i == 0 or i == n:
-                    ans += Y1[i]
-                else:
-                    ans += 2 * Y1[i]
+                ans += Y1[i] if i in [0, n] else 2 * Y1[i]
             return h / 2 * ans
-        
+
             
+
         #Xử lí đầu vào
         INPUT()
         a = ui.canduoi.toPlainText()
         b = ui.cantren.toPlainText()
         ep = ui.value_n.toPlainText()
-        
+
         #Xác thực dữ liệu
-        if a == "" or b == "" or F == None or ep == "":
+        if a == "" or b == "" or F is None or ep == "":
             ui.output.setText("ERROR!")
             messagebox.showerror("Hoàng Mạnh Khiêm VipPro", "Nhập thiếu dữ liệu đầu vào")
         else:
-            
+
             #Chuyển đổi dữ liệu
             a = Xulidata.Xuli(a)
             b = Xulidata.Xuli(b)
             ep = ui.value_n.toPlainText()
             ep = int(ep)
-            
-            
+
+
             #Xử lí đầu ra
             ans = TTPHinhThang(a, b, ep)
             ans = str(ans)
@@ -807,18 +803,18 @@ class TICHPHAN(object):
                 return None
             F = sympify(func)
             return F
-        
+
         def INPUT():
             global F
             F = Input()
-            
+
         X2 = []
         Y2 = []
-        
+
         def f(x1):
             pt = lambdify(x,F)
             return pt(x1)
-        
+
         def TTPSimpson(a,b,m):
             ans = 0
             h = (b - a) / m
@@ -826,31 +822,31 @@ class TICHPHAN(object):
                 X2.append(a+ i * h)
                 Y2.append(f(a + i * h))
             for i in range(m+1):
-                if i == 0 or i == m:
+                if i in [0, m]:
                     ans += Y2[i]
                 elif i % 2 == 1:
                     ans += 4 * Y2[i]
                 else:
                     ans += 2 * Y2[i]
             return h / 3 * ans
-            
+
         #Xử lí đầu vào
         INPUT()
         a = ui.canduoi.toPlainText()
         b = ui.cantren.toPlainText()
         ep = ui.value_n.toPlainText()
-        
+
         #Xác thực dữ liệu
-        if a == "" or b == "" or F == None or ep == "":
+        if a == "" or b == "" or F is None or ep == "":
             ui.output.setText("ERROR!")
             messagebox.showerror("Hoàng Mạnh Khiêm VipPro", "Nhập thiếu dữ liệu đầu vào")
         else:
-            
+
             #Chuyển đổi dữ liệu
             a = Xulidata.Xuli(a)
             b = Xulidata.Xuli(b)
             ep = int(ep)
-            
+
             #Xử lí đầu ra
             ans = TTPSimpson(a, b, ep)
             ans = str(ans)
@@ -982,14 +978,14 @@ class NGHIEMHPT(object):
             b = []
             countA = 0
             for s in data:
-                    row = s.strip().split(' ')
-                    row1 = [float(i) for i in row]
-                    row2 = []
-                    for i in range(len(row1)-1):
-                        countA = countA + 1
-                        row2.append(row1[i])
-                    A.append(row2)
-                    b.append(row1[len(row1)-1])
+                row = s.strip().split(' ')
+                row1 = [float(i) for i in row]
+                row2 = []
+                for i in range(len(row1)-1):
+                    countA = countA + 1
+                    row2.append(row1[i])
+                A.append(row2)
+                b.append(row1[-1])
             if(len(b)==countA/len(A)):
                 def gaussian_elimination(A, b):
                     n = len(A)
@@ -1031,7 +1027,7 @@ class NGHIEMHPT(object):
                             Ab[j][n] -= Ab[j][i] * x[i]
 
                     return x
-                
+
                 x = gaussian_elimination(A,b)
                 x = str(x)
                 ui.output.setText(x)
@@ -1060,13 +1056,8 @@ class NGHIEMHPT(object):
             m = [sum(abs(j) for j in r) for r in A]
             if all(2 * abs(A[i][i]) > m[i] for i in range(n)):
                 return 0
-            else:
-                m = [sum([abs(x[i]) for x in A]) for i in range(len(A[0]))]
-                if all(2 * abs(A[j][j]) > m[j] for j in range(n)):
-                    return 1
-                else:
-                    return -1
-
+            m = [sum(abs(x[i]) for x in A) for i in range(len(A[0]))]
+            return 1 if all(2 * abs(A[j][j]) > m[j] for j in range(n)) else -1
 
         # chuẩn vc của ma trận
         def chuanvc(a):
@@ -1074,26 +1065,28 @@ class NGHIEMHPT(object):
             for r in a:
                 m = (sum(abs(i) for i in r))
                 a1.append(m)
-            c = max(i for i in a1)
+            c = max(a1)
             return c
+
 
 
         # chuẩn 1 của ma trận
         def chuan1(a):
-            a1 = [sum([abs(x[i]) for x in a]) for i in range(len(a[0]))]
+            a1 = [sum(abs(x[i]) for x in a) for i in range(len(a[0]))]
             m = max(abs(i) for i in a1)
             return m
+
 
 
         # xác định loại chuẩn ma trận
         def chuan(a,n,A):
             if kt(A,n) == 0:
                 return chuanvc(a)
+            if kt(A,n) == 1:
+                return chuan1(a)
             else:
-                if kt(A,n) == 1:
-                    return chuan1(a)
-                else:
-                    print("error!")
+                print("error!")
+
 
 
         #xác định loại chuẩn vecto
@@ -1184,7 +1177,7 @@ class NGHIEMHPT(object):
 
         def chuanvec1(a):
             return sum(abs(i) for i in a)
-        
+
         # main
         # Bước 1: Kiểm tra A
         f1 = ui.giatriheso.toPlainText()
@@ -1209,8 +1202,8 @@ class NGHIEMHPT(object):
                     countA = countA + 1
                     row2.append(row1[i])
                 A.append(row2)
-                b.append(row1[len(row1)-1])
-            if(len(b)==countA/len(A) and len(x)==len(b) or x == "None"):
+                b.append(row1[-1])
+            if (len(b)==countA/len(A) and len(x)==len(b) or x == "None"):
                 if kt(A,len(A)) == -1:
                     ui.output.setText("None")
                     messagebox.showwarning("HoangManhKhiem VipPro","Ma trận A không phải ma trận chéo trội.")
@@ -1229,7 +1222,7 @@ class NGHIEMHPT(object):
                         epp =str(epp)
                         Y = lap_don(B,d,N)
                         Y = str(Y)
-                        OUT = "Nghiệm của hệ: " + Y + "\n" + "Sai số tiên nghiệm: " + epp
+                        OUT = f"Nghiệm của hệ: {Y}" + "\n" + "Sai số tiên nghiệm: " + epp
                         ui.output.setText(OUT)
                     elif ui.comboBox.currentText() == "Hậu nghiệm":
                         N = int(N)
@@ -1248,36 +1241,36 @@ class NGHIEMHPT(object):
                         Y = str(Y)
                         epp = q*x3 / (1 - q)
                         epp =str(epp)
-                        OUT = "Nghiệm của hệ: " + Y + "\n" + "Sai số hậu nghiệm: " + epp
+                        OUT = f"Nghiệm của hệ: {Y}" + "\n" + "Sai số hậu nghiệm: " + epp
                         ui.output.setText(OUT)
                     else:
-                            N = float(N)
-                            if kt(A,len(A)) == 0:
-                                out1 = "A là ma trận chéo trội hàng"
-                                xacdinh_d(A,n)
-                                xacdinh_b(A,n)
-                                eps = N*(1-chuan(B,n,A))/(chuan(B,n,A))
-                                qq = chuan(B,n,A)
-                                qq = str(qq)
-                                out2 = "chuan1 = " + qq
-                            if kt(A,len(A)) == 1:
-                                out1 = "A là ma trận chéo trội cột"
-                                xacdinh_d(A,n)
-                                xacdinh_b(A,n)
-                                chuanT = max(abs(1 / A[i][i]) for i in range(n))
-                                chuanD = max(abs(A[i][i]) for i in range(n))
-                                chuan_B1 = max([sum([abs(x[j] / A[j][j]) for x in A]) for j in range(n)]) - 1
-                                qq =chuan_B1
-                                qq = str(qq)
-                                out2 = "chuanvc = " + qq
-                            nghiem = lap_don_ss(A,B, d, eps)
-                            xkk = nghiem[0]
-                            sbl = nghiem[1]
-                            xkk = str(xkk)
-                            sbl = str(sbl)
-                            xxxxx = out1 + "\n" + out2 + "\n" + "Nghiệm của hệ:" + xkk + "\n" + "Số lần lặp: " + sbl
-                            ui.output.setText(xxxxx)
-                        
+                        N = float(N)
+                        if kt(A,len(A)) == 0:
+                            out1 = "A là ma trận chéo trội hàng"
+                            xacdinh_d(A,n)
+                            xacdinh_b(A,n)
+                            eps = N*(1-chuan(B,n,A))/(chuan(B,n,A))
+                            qq = chuan(B,n,A)
+                            qq = str(qq)
+                            out2 = f"chuan1 = {qq}"
+                        if kt(A,len(A)) == 1:
+                            out1 = "A là ma trận chéo trội cột"
+                            xacdinh_d(A,n)
+                            xacdinh_b(A,n)
+                            chuanT = max(abs(1 / A[i][i]) for i in range(n))
+                            chuanD = max(abs(A[i][i]) for i in range(n))
+                            chuan_B1 = max(sum(abs(x[j] / A[j][j]) for x in A) for j in range(n)) - 1
+                            qq =chuan_B1
+                            qq = str(qq)
+                            out2 = f"chuanvc = {qq}"
+                        nghiem = lap_don_ss(A,B, d, eps)
+                        xkk = nghiem[0]
+                        sbl = nghiem[1]
+                        xkk = str(xkk)
+                        sbl = str(sbl)
+                        xxxxx = out1 + "\n" + out2 + "\n" + "Nghiệm của hệ:" + xkk + "\n" + "Số lần lặp: " + sbl
+                        ui.output.setText(xxxxx)
+
             else:
                 ui.output.setText("ERROR!")
                 messagebox.showerror("HoangManhKhiem VipPro","Nhập thiếu dữ liệu")
@@ -1303,19 +1296,15 @@ class NGHIEMHPT(object):
             m = [sum(abs(j) for j in r) for r in A]
             if all(2 * abs(A[i][i]) > m[i] for i in range(n)):
                 return 0
-            else:
-                m = [sum([abs(x[i]) for x in A]) for i in range(len(A[0]))]
-                if all(2 * abs(A[j][j]) > m[j] for j in range(n)):
-                    return 1
-                else:
-                    return -1
+            m = [sum(abs(x[i]) for x in A) for i in range(len(A[0]))]
+            return 1 if all(2 * abs(A[j][j]) > m[j] for j in range(n)) else -1
 
         def chuanvc(a):
             a1 = []
             for r in a:
                 m = (sum(abs(i) for i in r))
                 a1.append(m)
-            c = max(i for i in a1)
+            c = max(a1)
             return c
 
         #xác định loại chuẩn vecto
@@ -1329,7 +1318,7 @@ class NGHIEMHPT(object):
 
         # chuẩn 1 của ma trận
         def chuan1(a):
-            a1 = [sum([abs(x[i]) for x in a]) for i in range(len(a[0]))]
+            a1 = [sum(abs(x[i]) for x in a) for i in range(len(a[0]))]
             m = max(abs(i) for i in a1)
             return m
 
@@ -1342,7 +1331,7 @@ class NGHIEMHPT(object):
             for i in range(n):
                 x = np.dot(np.linalg.inv(L), b - np.dot(U, x))
             return x
-        
+
         def gauss_ss(A, b, x, N):
             n = len(A)
             x = np.zeros(n)
@@ -1398,8 +1387,8 @@ class NGHIEMHPT(object):
                         countA = countA + 1
                         row2.append(row1[i])
                     A.append(row2)
-                    b.append(row1[len(row1)-1])
-                if(len(b)==countA/len(A) and len(x)==len(b)):
+                    b.append(row1[-1])
+                if (len(b)==countA/len(A) and len(x)==len(b)):
                     if kt(A,len(A)) == -1:
                         ui.output.setText("None")
                         messagebox.showwarning("HoangManhKhiem VipPro","Ma trận A không phải ma trận chéo trội.")
@@ -1410,17 +1399,25 @@ class NGHIEMHPT(object):
                             messagebox.showerror("HoangManhKhiem VipPro","Phương pháp không hội tụ trong số lần lặp lại tối đa.")
                         else:
                             x1 = gauss(A, b, x, 1)
-                            t = chuanvect(x1-x) 
+                            t = chuanvect(x1-x)
                             T = xacdinhT(A)
                             q = chuanvc(T)
                             epp = q**3*t/(1-q)
                             epp = str(epp)
-                            out = "Nghiệm của hệ: " + str(y[0]) + "\n" + "sai số tiên nghiệm sử dụng chuẩn vc: " + epp + "\n" + "số lần lặp: " + str(y[1])
+                            out = (
+                                f"Nghiệm của hệ: {str(y[0])}"
+                                + "\n"
+                                + "sai số tiên nghiệm sử dụng chuẩn vc: "
+                                + epp
+                                + "\n"
+                                + "số lần lặp: "
+                                + str(y[1])
+                            )
                             ui.output.setText(out)
                 else:
                     ui.output.setText("ERROR!")
                     messagebox.showerror("HoangManhKhiem VipPro","Nhập thiếu dữ liệu")
-                
+
             else:
                 data = f1.splitlines()
                 x = x.split()
@@ -1438,8 +1435,8 @@ class NGHIEMHPT(object):
                         countA = countA + 1
                         row2.append(row1[i])
                     A.append(row2)
-                    b.append(row1[len(row1)-1])
-                if(len(b)==countA/len(A) and len(x)==len(b)):
+                    b.append(row1[-1])
+                if (len(b)==countA/len(A) and len(x)==len(b)):
                     if kt(A,len(A)) == -1:
                         ui.output.setText("None")
                         messagebox.showwarning("HoangManhKhiem VipPro","Ma trận A không phải ma trận chéo trội.")
@@ -1447,12 +1444,17 @@ class NGHIEMHPT(object):
                         y = gauss(A,b,x,N)
                         y = str(y)
                         x1 = gauss(A, b, x, 1)
-                        t = chuanvect(x1-x) 
+                        t = chuanvect(x1-x)
                         T = xacdinhT(A)
                         q = chuanvc(T)
                         epp = q**3*t/(1-q)
                         epp = str(epp)
-                        out = "Nghiệm của hệ: " + y + "\n" + "sai số tiên nghiệm sử dụng chuẩn vc: " + epp
+                        out = (
+                            f"Nghiệm của hệ: {y}"
+                            + "\n"
+                            + "sai số tiên nghiệm sử dụng chuẩn vc: "
+                            + epp
+                        )
                         ui.output.setText(out)
                 else:
                     ui.output.setText("ERROR!")
